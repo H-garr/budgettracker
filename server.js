@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const compression = require("compression");
 
 const PORT = 3000;
-
+// will eventually need to add a env when setting up heroku
 const app = express();
 
 app.use(logger("dev"));
