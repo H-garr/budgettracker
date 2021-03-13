@@ -63,3 +63,6 @@ function checkDatabase(){
         };
     };
 };
+window.addEventListener('online', checkDatabase);
+// forgot to add this call back for the check database function hence why it was not working last commit.
+// this checks if the user is online/when they come back online and when that happens it runs/calls the function checkDatabase.
