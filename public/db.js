@@ -3,13 +3,13 @@ let db;
 // indexedDB is pretty self explanitory if you read the function names.
 const request = indexedDB.open("budget", 1);
 
-request.onupgradeneeded = function(e) {
-     db = e.target.result;
-    db.createObjectStore("pending", { autoIncrement: true});
+request.onupgradeneeded = function (e) {
+    db = e.target.result;
+    db.createObjectStore("pending", { autoIncrement: true });
 };
 // tests when triggered that when a data base has a bigger version number than the exisitng stored db is loaded.
 
-request.onsuccess = function(e) {
+request.onsuccess = function (e) {
     db = e.target.result;
 
     if (navigator.onLine) {
@@ -18,7 +18,7 @@ request.onsuccess = function(e) {
     };
 };
 
-request.onerror = function() {
+request.onerror = function () {
     console.log("It appears something went wrong.");
 };
 function saveRecord(record) {
@@ -30,16 +30,16 @@ function saveRecord(record) {
     storeobj.add(record);
 };
 
-function checkDatabase(){
+function checkDatabase() {
     const transaction = db.transaction(["pending"], "readwrite");
 
     const storeobj = transaction.objectStore("pending");
 
     const getAll = storeobj.getAll();
 
-    getAll.onsuccess = function() {
+    getAll.onsuccess = function () {
         // a grab all when sucessful 
-        if (getAll.result.length > 0){
+        if (getAll.result.length > 0) {
             // validation of if the the get all has any data in it.
             fetch("/api/transaction/bulk", {
                 // CRUD post event.
@@ -50,16 +50,16 @@ function checkDatabase(){
                     "Content-Type": "application/json"
                 }
             })
-            .then(response => response.json())
-            // coverts lang into json
-            .then(()=>{
-                // opens a transaction into your "pending" database.
-                const transaction = db.transaction(["pending"], "readwrite");
-                // accesses the "pending" objectStore
-                const storeobj = transaction.objectStore("pending");
-                // clears the storedobj
-                storeobj.clear();
-            });
+                .then(response => response.json())
+                // coverts language into json
+                .then(() => {
+                    // opens a transaction into your "pending" database.
+                    const transaction = db.transaction(["pending"], "readwrite");
+                    // accesses the "pending" objectStore
+                    const storeobj = transaction.objectStore("pending");
+                    // clears the storedobj
+                    storeobj.clear();
+                });
         };
     };
 };
