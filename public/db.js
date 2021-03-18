@@ -2,7 +2,7 @@
 let db;
 // indexedDB is pretty self explanitory if you read the function names.
 const request = indexedDB.open("budget", 1);
-
+// also added db.store in the gitignore so github would not register any other users stored data.
 request.onupgradeneeded = function (e) {
     db = e.target.result;
     db.createObjectStore("pending", { autoIncrement: true });
