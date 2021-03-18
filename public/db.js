@@ -18,15 +18,15 @@ request.onsuccess = function(e) {
     };
 };
 
-request.onerror = function(e) {
+request.onerror = function() {
     console.log("It appears something went wrong.");
 };
 function saveRecord(record) {
     // creating this early so i can call it for later.
     const transaction = db.transaction(["pending"], "readwrite");
-
+    // writes the transaction in the database.
     const storeobj = transaction.objectStore("pending");
-
+    // "holds" the transaction in a pending state until, in laymen terms, is "successful"
     storeobj.add(record);
 };
 
